@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import json
 import random
 import names
@@ -13,7 +14,7 @@ print("   Motto:        ", pick_aspect("mottos.json"))
 print("   Advantage:    ", pick_aspect("advantages.json"))
 print("   Trouble:      ", pick_aspect("troubles.json"))
 print("   Disposition:  ", pick_aspect("dispositions.json"))
-print("   Gear:         ", pick_aspect("gear.json"))
+#print("   Gear:         ", pick_aspect("gear.json"))
 
 nskills = random.randint(1,4) + random.randint(1,3) + random.randint(1,2) + 1
 levels = []

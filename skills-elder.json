@@ -2,10 +2,10 @@
  "Enchanting": ["Spellbinder", "Student of the Craft", "Specialist"],
  "Osteomancy": ["Bonecrafting", "Osteomantic Divination", "I Spilled the Blood"],
  "Sail": ["Superior Tactics", "Second Star to the Right", "Shipwright"],
- "Alteration": ["Cantrip", "Cantrip", "Cantrip"],
- "Conjuration": ["Cantrip", "Cantrip", "Cantrip"],
- "Destruction": ["Cantrip", "Cantrip", "Cantrip"],
- "Illusion": ["Cantrip", "Cantrip", "Cantrip"],
- "Restoration": ["Cantrip", "Cantrip", "Cantrip"]
+ "Alteration": ["Cantrip", "Magic Resistance", "Going Commando", "All magic is Alteration"],
+ "Conjuration": ["Cantrip", "Specialization", "Permanence"],
+ "Destruction": ["Cantrip", "Specialization (element)", "Specialization (form)"],
+ "Illusion": ["Cantrip", "Affect (undead/automata)", "Stealthy Casting"],
+ "Restoration": ["Cantrip", "Wound", "Angel of Life"]
 }
 
