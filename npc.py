@@ -195,15 +195,21 @@ class FateNPC:
         
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate a Fate NPC')
+    parser.add_argument("--preset", metavar='PRESET', type=str, nargs='*')
     for k, v in FateNPC.__dict__.items():
         if isinstance(v, PropertyGenerator):
             parser.add_argument("--" + k,
                 metavar=v.metavar,
                 type=v.type,
                 nargs=v.nargs,
+                default=argparse.SUPPRESS,
                 help=v.__doc__)
     args = parser.parse_args()
     npc = FateNPC()
+    for fn in args.preset:
+        for k, v in json_resource(fn).items():
+            setattr(npc, k, v)
+
     for k, v in args.__dict__.items():
         if v is not None:
             setattr(npc, k, v)
