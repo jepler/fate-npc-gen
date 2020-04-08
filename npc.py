@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 import argparse
 import functools
+import glob
 import itertools
 import json
 import operator
 import os
 import random
-
-import names
 
 ranks = ["Average", "Fair", "Good", "Great", "Superb", "Fantastic", "Epic", "Legendary"]
 
@@ -98,10 +97,41 @@ class FateNPC:
     def __init__(self, **kw):
         for k, v in kw.items():
             setattr(self, k, v)
-        
+
+    @generated_property
+    def gender(self):
+        return random.choice(("Male", "Female", "Nonbinary"))
+
+    @generated_property
+    def name_styles(self):
+        if random.random() > .1:
+            if self.gender == "Male": return ["unisex", "masculine"]
+            if self.gender == "Female": return ["unisex", "feminine"]
+        return ["unisex", "masculine", "feminine"]
+
+    @generated_property
+    def race(self):
+        return random.choice(("Altmer", "Argonian", "Bosmer", "Breton", "Dunmer", "Imperial", "Khajiit", "Nord", "Orsimer", "Redguard"))
+
+    @generated_property
+    def name_background(self):
+        if random.random() > .1:
+            return random.choice(("Altmer", "Argonian", "Bosmer", "Breton", "Dunmer", "Imperial", "Khajiit", "Nord", "Orsimer", "Redguard"))
+        return self.race
+
+    @generated_property
+    def names_json_file(self):
+        style = self.name_styles
+        random.shuffle(style)
+        choices = []
+        for s in style:
+            pat = f"names/{self.race.lower()}-{s}*.json"
+            choices.extend(glob.glob(pat))
+        return random.choice(choices)
+
     @generated_property
     def name(self):
-        return names.get_full_name()
+        return choose_from_json(self.names_json_file).title()
 
     @generated_property(type=int)
     def skill_cap(self):
@@ -174,7 +204,7 @@ class FateNPC:
         return choose_from_json('gear.json')
 
     def print(self):
-        print(self.name)
+        print(f'{self.name} - {self.gender} {self.race}')
         print(f' "{self.motto}"')
         print()
         print(' High Concept:', self.high_concept)
@@ -195,7 +225,7 @@ class FateNPC:
         
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate a Fate NPC')
-    parser.add_argument("--preset", metavar='PRESET', type=str, nargs='*')
+    parser.add_argument("--preset", metavar='PRESET', type=str, default=[], nargs='*')
     for k, v in FateNPC.__dict__.items():
         if isinstance(v, PropertyGenerator):
             parser.add_argument("--" + k,
